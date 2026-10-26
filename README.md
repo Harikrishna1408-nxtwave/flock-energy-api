@@ -54,7 +54,7 @@ flock-energy-api/
 Clone the repository and navigate to its directory:
 
 ```bash
-git clone <YOUR_PUBLIC_GITHUB_REPOSITORY_URL>
+git clone https://github.com/Harikrishna1408-nxtwave/flock-energy-api.git
 cd flock-energy-api
 ```
 
