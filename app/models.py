@@ -1,6 +1,5 @@
 from datetime import datetime
-
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class Meter(BaseModel):
@@ -20,13 +19,22 @@ class MeterListResponse(BaseModel):
     page: int
     page_size: int = Field(alias="pageSize")
 
-
 class ConsumptionReading(BaseModel):
     timestamp: datetime
     kwh: float
     kvah: float
     volt_r: float = Field(alias="voltR")
 
+    @field_validator("timestamp", mode="before")
+    @classmethod
+    def parse_timestamp(cls, value):
+        if isinstance(value, datetime):
+            return value
+
+        if isinstance(value, str):
+            return datetime.strptime(value, "%d/%m/%Y %H:%M")
+
+        return value
 
 class ConsumptionResponse(BaseModel):
     data: list[ConsumptionReading]
